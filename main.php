@@ -2,9 +2,11 @@
 require_once("grille.php");
 
 $grille = array(
-      array("a", "b", "c"),
-      array("d", "e", "f"),
-      array("g", "h", "i"),
-      array("j", "k", "l")
+      array(" ", " ", " "),
+      array(" ", " ", " "),
+      array(" ", " ", " "),
+      array(" ", " ", " ")
     );
 dessiner_grille($grille);
+
+echo $grille[3][2];
