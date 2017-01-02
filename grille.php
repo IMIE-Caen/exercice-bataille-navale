@@ -1,6 +1,7 @@
 <?php
 
-function dessiner_grille($tab){
+function dessiner_grille(){
+  $tab = $GLOBALS['grille'];
   echo "\n\n";
   for($l = 0 ; $l < count($tab) ; $l++){
     $ligne = $tab[$l];
@@ -31,12 +32,17 @@ function lire_case($x, $y){
 
 function placer_bateau(){
   do {
-
+    echo "Saisir les coordonnées :\n";
     echo "X : ";
     $x = trim(fgets(STDIN));
     echo "Y : ";
     $y = trim(fgets(STDIN));
+    // Tout pendant que l'utilisateur fait n'importe quoi
   } while( ! is_case_disponible($x, $y) );
+
+  // La case est dispo !
+  $GLOBALS['grille'][$y][$x] = 'x';
+  dessiner_grille();
 
 }
 

@@ -8,13 +8,14 @@ echo "Quelle taille pour grille ? ";
 $reponse = trim(fgets(STDIN));
 
 $grille = array_fill(0, $reponse, array_fill(0, $reponse, '~'));
-$grille[0][2] = "x";
 
-dessiner_grille($grille);
+dessiner_grille();
 
 echo "Placez vos bateaux\n";
 
-placer_bateau();
+while(true){
+  placer_bateau();
+}
 
 echo "OK";
 //$valeur_case = lire_case(1, 3);
