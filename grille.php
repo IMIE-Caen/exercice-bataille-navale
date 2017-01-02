@@ -6,11 +6,11 @@ function dessiner_grille($tab){
     $ligne = $tab[$l];
     dessiner_separateur(count($ligne));
     for($i = 0 ; $i < count($ligne) ; $i++ ){
-      echo "| $ligne[$i] ";
+      echo "│ $ligne[$i] ";
       // Se je suis à la dernière case, je ferme le
       // tableau
       if($i == count($ligne) - 1){
-        echo "|\n";
+        echo "│\n";
       }
     }
 
@@ -20,7 +20,7 @@ function dessiner_grille($tab){
 }
 
 function dessiner_separateur($nb_cases){
-  echo join('---', array_fill(0, $nb_cases + 1, '+'))."\n";
+  echo join('───', array_fill(0, $nb_cases + 1, '┼'))."\n";
 }
 
 function lire_case($grille, $x, $y){
@@ -33,7 +33,7 @@ function ecrire_case(&$grille, $x, $y, $valeur){
 function is_case_disponible($grille, $x, $y){
    return isset($grille[$y])
       && isset($grille[$y][$x])
-      && lire_case($grille, $x, $y) == '~';
+      && lire_case($grille, $x, $y) == "~";
 }
 
 
@@ -63,7 +63,52 @@ function placer_bateau_aleatoirement(&$grille){
 }
 
 function tour_joueur(&$grille_adversaire){
-  // saisit des coordonnees
+  // $impact = false;
+  do{
+    // saisit des coordonnees
+    $impact = false;
+    //effacer_ecran();
+    echo "Saisir les coordonnées à viser :\n";
+    echo "X : ";
+    $x = trim(fgets(STDIN));
+    echo "Y : ";
+    $y = trim(fgets(STDIN));
+
+    $impact = is_bateau_touche($grille_adversaire, $x, $y);
+    if($impact){
+      ecrire_case($grille_adversaire, $x, $y, "x");
+      echo "Touché !";
+      dessiner_grille($grille_adversaire);
+    }
+    else{
+      echo "Raté !";
+    }
+    if(is_grille_gagnee($grille_adversaire)){
+      die("GAGNÉ !");
+    }
+  }
   // tant qu'on touche un bateau (il devient coulé), on rejoue
+  while($impact);
+
   // sinon tour suivant
+  // voilà !
+}
+
+function is_grille_gagnee($grille){
+  for($i = 0 ; $i < count($grille) ; $i++){
+    for($j = 0 ; $j < count($grille[$i]) ; $j++){
+      if($grille[$i][$j] == 'o'){
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+function is_bateau_touche($grille, $x, $y){
+  return lire_case($grille, $x, $y) == "o";
+}
+
+function effacer_ecran(){
+  system('clear');
 }
