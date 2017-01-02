@@ -1,6 +1,8 @@
 <?php
 require_once("grille.php");
 
+effacer_ecran();
+echo "\033[37m\033[46m";
 
 echo "\n\n";
 
@@ -10,6 +12,7 @@ $reponse = trim(fgets(STDIN));
 // colorier : \033[37m\033[46m~\033[39m\033[49m
 $ma_grille = array_fill(0, $reponse, array_fill(0, $reponse, "~"));
 $grille_adversaire = array_fill(0, $reponse, array_fill(0, $reponse, "~"));
+
 
 dessiner_grille($ma_grille);
 
@@ -23,13 +26,13 @@ echo "Placement des bateaux adverses";
 for($i = 0 ; $i < 5 ; $i++){
   placer_bateau_aleatoirement($grille_adversaire);
 }
-dessiner_grille($grille_adversaire);
+dessiner_grille($grille_adversaire, true);
 
 
 do{
   // on joue
   tour_joueur($grille_adversaire);
-  dessiner_grille($grille_adversaire);
+  dessiner_grille($grille_adversaire, true);
 
   // successivement tour joueur, tour ordi jusqu'à ce que quelqu'un ait gagnés
 } while ( true /* quelqu'un a gagné */);

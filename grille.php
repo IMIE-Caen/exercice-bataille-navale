@@ -1,12 +1,16 @@
 <?php
 
-function dessiner_grille($tab){
+function dessiner_grille($tab, $filtre_bateaux = false){
   echo "\n\n";
   for($l = 0 ; $l < count($tab) ; $l++){
     $ligne = $tab[$l];
     dessiner_separateur(count($ligne));
     for($i = 0 ; $i < count($ligne) ; $i++ ){
-      echo "│ $ligne[$i] ";
+
+      $contenu_case = $ligne[$i];
+      $contenu =  $filtre_bateaux && ($contenu_case != "~" && $contenu_case != "*") ? "~" : $contenu_case;
+
+      echo "│ $contenu ";
       // Se je suis à la dernière case, je ferme le
       // tableau
       if($i == count($ligne) - 1){
@@ -76,9 +80,9 @@ function tour_joueur(&$grille_adversaire){
 
     $impact = is_bateau_touche($grille_adversaire, $x, $y);
     if($impact){
-      ecrire_case($grille_adversaire, $x, $y, "x");
+      ecrire_case($grille_adversaire, $x, $y, "*");
       echo "Touché !";
-      dessiner_grille($grille_adversaire);
+      dessiner_grille($grille_adversaire, true);
     }
     else{
       echo "Raté !";
