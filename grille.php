@@ -23,3 +23,27 @@ function dessiner_grille($tab){
 function dessiner_separateur($nb_cases){
   echo join('---', array_fill(0, $nb_cases + 1, '+'))."\n";
 }
+
+function lire_case($x, $y){
+  $grille = $GLOBALS['grille'];
+  return $grille[$y][$x] ;
+}
+
+function placer_bateau(){
+  do {
+
+    echo "X : ";
+    $x = trim(fgets(STDIN));
+    echo "Y : ";
+    $y = trim(fgets(STDIN));
+  } while( ! is_case_disponible($x, $y) );
+
+}
+
+function is_case_disponible($x, $y){
+  $grille = $GLOBALS['grille'];
+
+   return isset($grille[$y])
+      && isset($grille[$y][$x])
+      && $grille[$y][$x] == '~';
+}
