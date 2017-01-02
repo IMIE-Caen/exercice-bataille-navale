@@ -30,6 +30,13 @@ function ecrire_case(&$grille, $x, $y, $valeur){
   $grille[$y][$x] = $valeur;
 }
 
+function is_case_disponible($grille, $x, $y){
+   return isset($grille[$y])
+      && isset($grille[$y][$x])
+      && lire_case($grille, $x, $y) == '~';
+}
+
+
 function placer_bateau(&$grille){
   do {
     echo "Saisir les coordonnées :\n";
@@ -55,8 +62,8 @@ function placer_bateau_aleatoirement(&$grille){
 
 }
 
-function is_case_disponible($grille, $x, $y){
-   return isset($grille[$y])
-      && isset($grille[$y][$x])
-      && lire_case($grille, $x, $y) == '~';
+function tour_joueur(&$grille_adversaire){
+  // saisit des coordonnees
+  // tant qu'on touche un bateau (il devient coulé), on rejoue
+  // sinon tour suivant
 }
