@@ -34,6 +34,7 @@ $reponse = trim(fgets(STDIN));
 $ma_grille = array_fill(0, $reponse, array_fill(0, $reponse, "~"));
 $grille_adversaire = array_fill(0, $reponse, array_fill(0, $reponse, "~"));
 
+$cases_frappees = array();
 
 
 
@@ -92,8 +93,16 @@ do{
       echo "Tour ordi :\n";
       $impact = false;
       //effacer_ecran();
-      $y_aleatoire = rand(0, count($ma_grille) - 1);
-      $x_aleatoire = rand(0, count($ma_grille[$y_aleatoire]) - 1);
+
+      do{
+        $y_aleatoire = rand(0, count($ma_grille) - 1);
+        $x_aleatoire = rand(0, count($ma_grille[$y_aleatoire]) - 1);
+      } while(in_array([$x_aleatoire,$y_aleatoire],$cases_frappees));
+
+
+      $cases_frappees[]=[$x_aleatoire,$y_aleatoire];
+
+
       echo "$x_aleatoire, $y_aleatoire";
       $impact = is_bateau_touche($ma_grille, $x_aleatoire, $y_aleatoire);
       if($impact){
