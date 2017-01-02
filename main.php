@@ -14,12 +14,15 @@ dessiner_grille($ma_grille);
 
 echo "Placez vos bateaux\n";
 
-
 for($i = 0 ; $i < 5 ; $i++){
   placer_bateau($ma_grille);
 }
+echo "Placement des bateaux adverses";
+for($i = 0 ; $i < 5 ; $i++){
+  placer_bateau_aleatoirement($grille_adversaire);
+}
+dessiner_grille($grille_adversaire);
 
 
 
-echo "OK";
 // placement aléatoire des bateaux adversaires ici ?

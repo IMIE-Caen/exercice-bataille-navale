@@ -19,7 +19,6 @@ function dessiner_grille($tab){
   echo "\n\n";
 }
 
-
 function dessiner_separateur($nb_cases){
   echo join('---', array_fill(0, $nb_cases + 1, '+'))."\n";
 }
@@ -27,8 +26,11 @@ function dessiner_separateur($nb_cases){
 function lire_case($grille, $x, $y){
   return $grille[$y][$x] ;
 }
+function ecrire_case(&$grille, $x, $y, $valeur){
+  $grille[$y][$x] = $valeur;
+}
 
-function placer_bateau($grille){
+function placer_bateau(&$grille){
   do {
     echo "Saisir les coordonnées :\n";
     echo "X : ";
@@ -39,13 +41,22 @@ function placer_bateau($grille){
   } while( ! is_case_disponible($grille, $x, $y) );
 
   // La case est dispo !
-  $grille[$y][$x] = 'x';
+  ecrire_case($grille, $x, $y, 'x');
   dessiner_grille($grille);
+}
+
+function placer_bateau_aleatoirement(&$grille){
+  do {
+    $y_aleatoire = rand(0, count($grille) - 1);
+    $x_aleatoire = rand(0, count($grille[$y_aleatoire]) - 1);
+    // Tout pendant que l'utilisateur fait n'importe quoi
+  } while( ! is_case_disponible($grille, $x_aleatoire, $y_aleatoire) );
+  ecrire_case($grille, $x_aleatoire, $y_aleatoire, 'o');
 
 }
 
 function is_case_disponible($grille, $x, $y){
    return isset($grille[$y])
       && isset($grille[$y][$x])
-      && $grille[$y][$x] == '~';
+      && lire_case($grille, $x, $y) == '~';
 }
