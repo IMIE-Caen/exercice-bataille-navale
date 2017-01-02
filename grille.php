@@ -52,7 +52,7 @@ function placer_bateau(&$grille){
   } while( ! is_case_disponible($grille, $x, $y) );
 
   // La case est dispo !
-  ecrire_case($grille, $x, $y, 'x');
+  ecrire_case($grille, $x, $y, 'o');
   dessiner_grille($grille);
 }
 
@@ -64,38 +64,6 @@ function placer_bateau_aleatoirement(&$grille){
   } while( ! is_case_disponible($grille, $x_aleatoire, $y_aleatoire) );
   ecrire_case($grille, $x_aleatoire, $y_aleatoire, 'o');
 
-}
-
-function tour_joueur(&$grille_adversaire){
-  // $impact = false;
-  do{
-    // saisit des coordonnees
-    $impact = false;
-    //effacer_ecran();
-    echo "Saisir les coordonnées à viser :\n";
-    echo "X : ";
-    $x = trim(fgets(STDIN));
-    echo "Y : ";
-    $y = trim(fgets(STDIN));
-
-    $impact = is_bateau_touche($grille_adversaire, $x, $y);
-    if($impact){
-      ecrire_case($grille_adversaire, $x, $y, "*");
-      echo "Touché !";
-      dessiner_grille($grille_adversaire, true);
-    }
-    else{
-      echo "Raté !";
-    }
-    if(is_grille_gagnee($grille_adversaire)){
-      die("GAGNÉ !");
-    }
-  }
-  // tant qu'on touche un bateau (il devient coulé), on rejoue
-  while($impact);
-
-  // sinon tour suivant
-  // voilà !
 }
 
 function is_grille_gagnee($grille){
