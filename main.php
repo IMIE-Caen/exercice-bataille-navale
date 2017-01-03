@@ -1,5 +1,7 @@
 <?php
 
+
+
 /*
 echo "\033[3;3f";
 echo "COUCOU";
@@ -35,7 +37,6 @@ die();
 require_once("grille.php");
 
 effacer_ecran();
-echo "\033[37m\033[46m";
 
 echo "\n\n";
 
@@ -51,8 +52,8 @@ $cases_frappees = array();
 
 
 echo "Placez vos bateaux\n";
-for($i = 0 ; $i < 2 ; $i++){
-  placer_bateau($ma_grille);
+for($i = 0 ; $i < 5 ; $i++){
+  placer_bateau($ma_grille, $i);
 }
 dessiner_grille($ma_grille);
 

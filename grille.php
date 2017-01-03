@@ -41,7 +41,7 @@ function is_case_disponible($grille, $x, $y){
 }
 
 
-function placer_bateau(&$grille){
+function placer_bateau(&$grille, $index_couleur = 0){
   do {
     echo "Saisir les coordonnées :\n";
     echo "X : ";
@@ -49,10 +49,11 @@ function placer_bateau(&$grille){
     echo "Y : ";
     $y = trim(fgets(STDIN));
     // Tout pendant que l'utilisateur fait n'importe quoi
-  } while( ! is_case_disponible($grille, $x, $y) );
+  } while( ! is_case_disponible($grille, $x, $y) || ! is_case_disponible($grille, $x, $y+1) );
 
   // La case est dispo !
-  ecrire_case($grille, $x, $y, 'o');
+  ecrire_case($grille, $x, $y, "\033[3".($index_couleur+1)."mo\033[39m");
+  ecrire_case($grille, $x, $y+1, "\033[3".($index_couleur+1)."mo\033[39m");
   dessiner_grille($grille);
 }
 
