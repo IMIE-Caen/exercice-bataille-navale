@@ -1,7 +1,19 @@
 <?php
 
-
 /*
+echo "\033[3;3f";
+echo "COUCOU";
+echo "\033[4;3f";
+echo "les amis";
+
+
+echo "\033[3;13f";
+echo "COUCOU";
+echo "\033[4;13f";
+echo "les amis";
+die();
+
+
 $tab  = array('a', 'b', 'c');
 var_dump($tab);
 
