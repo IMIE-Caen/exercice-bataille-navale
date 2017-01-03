@@ -1,4 +1,7 @@
 <?php
+function init_grille($taille){
+  return array_fill(0, $taille, array_fill(0, $taille, "~"));
+}
 
 function dessiner_grille($tab, $filtre_bateaux = false){
   echo "\n\n";
@@ -27,45 +30,36 @@ function dessiner_separateur($nb_cases){
   echo join('───', array_fill(0, $nb_cases + 1, '┼'))."\n";
 }
 
-function lire_case($grille, $x, $y){
-  return $grille[$y][$x] ;
+function lire_case($grille, $coords){
+  return $grille[$coords['y']][$coords['x']] ;
 }
-function ecrire_case(&$grille, $x, $y, $valeur){
-  $grille[$y][$x] = $valeur;
-}
-
-function is_case_disponible($grille, $x, $y){
-   return isset($grille[$y])
-      && isset($grille[$y][$x])
-      && lire_case($grille, $x, $y) == "~";
+function ecrire_case(&$grille, $coords, $valeur){
+  $grille[$coords['y']][$coords['x']] = $valeur;
 }
 
+function is_case_disponible($grille, $coords){
+   return isset($grille[$coords['y']])
+      && isset($grille[$coords['y']][$coords['x']])
+      && lire_case($grille, $coords) == "~";
+}
 
-function placer_bateau(&$grille, $index_couleur = 0){
+
+function placer_bateau(&$grille, $interactive = false, $index_bateau = 0){
   do {
-    echo "Saisir les coordonnées :\n";
-    echo "X : ";
-    $x = trim(fgets(STDIN));
-    echo "Y : ";
-    $y = trim(fgets(STDIN));
+    if($interactive)
+      $coords = get_saisie_coords();
+    else
+      $coords = get_random_coords($grille);
+
     // Tout pendant que l'utilisateur fait n'importe quoi
-  } while( ! is_case_disponible($grille, $x, $y) || ! is_case_disponible($grille, $x, $y+1) );
+    $coords_fin_bateau = ['x'=>$coords['x'],'y'=> $coords['y'] + 1];
+  } while( (!is_case_disponible($grille, $coords) || !is_case_disponible($grille, $coords_fin_bateau)));
 
   // La case est dispo !
-  ecrire_case($grille, $x, $y, "\033[3".($index_couleur+1)."mo\033[39m");
-  ecrire_case($grille, $x, $y+1, "\033[3".($index_couleur+1)."mo\033[39m");
-  dessiner_grille($grille);
+  ecrire_case($grille, $coords, "o");
+  ecrire_case($grille, $coords_fin_bateau, "o");
 }
 
-function placer_bateau_aleatoirement(&$grille){
-  do {
-    $y_aleatoire = rand(0, count($grille) - 1);
-    $x_aleatoire = rand(0, count($grille[$y_aleatoire]) - 1);
-    // Tout pendant que l'utilisateur fait n'importe quoi
-  } while( ! is_case_disponible($grille, $x_aleatoire, $y_aleatoire) );
-  ecrire_case($grille, $x_aleatoire, $y_aleatoire, 'o');
-
-}
 
 function is_grille_gagnee($grille){
   for($i = 0 ; $i < count($grille) ; $i++){
@@ -78,8 +72,28 @@ function is_grille_gagnee($grille){
   return true;
 }
 
-function is_bateau_touche($grille, $x, $y){
-  return lire_case($grille, $x, $y) == "o";
+function is_bateau_touche($grille, $coords){
+  return lire_case($grille, $coords) == "o";
+}
+
+function get_saisie_coords(){
+  echo "Saisir les coordonnées :\n";
+  echo "X : ";
+  $x = trim(fgets(STDIN));
+  echo "Y : ";
+  $y = trim(fgets(STDIN));
+  return array('x'=> $x, 'y' => $y);
+}
+
+function get_random_coords($grille, &$memo_cases_frappees = array()){
+  do{
+    $y_aleatoire = rand(0, count($grille) - 1);
+    $x_aleatoire = rand(0, count($grille[$y_aleatoire]) - 1);
+    $coords_aleatoires = array('x'=> $x_aleatoire, 'y' => $y_aleatoire);
+  }
+  while(in_array($coords_aleatoires, $memo_cases_frappees));
+  $memo_cases_frappees[]= $coords_aleatoires;
+  return $coords_aleatoires;
 }
 
 function effacer_ecran(){
