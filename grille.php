@@ -1,4 +1,10 @@
 <?php
+
+
+
+
+
+
 function init_grille($taille){
   return array_fill(0, $taille, array_fill(0, $taille, "~"));
 }
@@ -45,19 +51,32 @@ function is_case_disponible($grille, $coords){
 
 
 function placer_bateau(&$grille, $interactive = false, $index_bateau = 0){
+
   do {
     if($interactive)
       $coords = get_saisie_coords();
     else
       $coords = get_random_coords($grille);
 
-    // Tout pendant que l'utilisateur fait n'importe quoi
-    $coords_fin_bateau = ['x'=>$coords['x'],'y'=> $coords['y'] + 1];
-  } while( (!is_case_disponible($grille, $coords) || !is_case_disponible($grille, $coords_fin_bateau)));
+    $coordonnees_bateau = array($coords);
+    for($i = 1 ; $i <= $index_bateau + 1; $i++){
+      $coordonnees_bateau[] = ['x' => $coords['x'], 'y' => $coords['y'] + $i ];
+    }
+
+  } while( ! is_tableau_sur_grille( $coordonnees_bateau, $grille )  );
 
   // La case est dispo !
-  ecrire_case($grille, $coords, "o");
-  ecrire_case($grille, $coords_fin_bateau, "o");
+  foreach($coordonnees_bateau as $coords){
+    ecrire_case($grille, $coords, "o");
+  }
+}
+
+function is_tableau_sur_grille($tab, $grille){
+  $ok = true;
+  foreach($tab as $coords){
+    $ok = $ok && is_case_disponible($grille, $coords);
+  }
+  return $ok;
 }
 
 

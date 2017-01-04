@@ -1,5 +1,7 @@
 <?php
 
+
+
 require_once("grille.php");
 
 effacer_ecran();
@@ -17,11 +19,13 @@ $cases_frappees_ordi = array();
 dessiner_grille($grille_humain);
 
 echo "Placez vos bateaux\n";
-for($i = 0 ; $i < 2 ; $i++){
-  placer_bateau($grille_humain, true, $i);
+for($i = 0 ; $i < 50 ; $i++){
+  //placer_bateau($grille_humain, true, $i);
   // on en profite pour placer aussi le bateau adverse dans sa grille
   placer_bateau($grille_ordi, false, $i);
-  dessiner_grille($grille_humain);
+  dessiner_grille($grille_ordi);
+  sleep(1);
+  effacer_ecran();
 }
 
 // Le joueur commence (par opposition à l'ordi)
