@@ -1,17 +1,19 @@
 
-Resources utiles (pour vous occuper, pas pour l'évaluation) :
+## Resources utiles
+Pour vous occuper, pas pour l'évaluation.
+
 https://openclassrooms.com/courses/concevez-votre-site-web-avec-php-et-mysql/lire-et-ecrire-dans-un-fichier-5
 
 Quelques notes de cours :
-https://gist.github.com/clm-a/97de9032745bc8c1686d94e55fba7094
-
-Attention il y a à la fois du C et du PHP mais c'est généralement très proche.
+https://gist.github.com/clm-a/97de9032745bc8c1686d94e55fba7094 (Attention il y a à la fois du C et du PHP mais c'est généralement très proche).
 
 
 
 ----------------------
 
-## Réalisation d'un quitte ou double
+## Evaluation !
+
+### Réalisation d'un quitte ou double
 
 Le principe du quitte ou double est de miser sur sa réussite à un jeu de hasard.
 Si on gagne la manche, on double sa mise et si on perd, on perd tout.
